@@ -24,13 +24,22 @@
                     let cell = document.createElement('div');
                     cell.className = 'board-cell';
                     if ((i+j) % 2 == 0) {
-                        cell.style.backgroundColor = '#fff';
+                        cell.style.backgroundColor = '#D0B6B0';
                     } else {
-                        cell.style.backgroundColor = '#000';
+                        cell.style.backgroundColor = '#9B746B';
                     }
                     board.appendChild(cell);
                 }
             }
+            for (const child of board.children) {
+                let img = document.createElement('img');
+                img.src = '/images/Chess_qdt45.svg';
+                img.width = 45;
+                img.height = 45;
+                child.appendChild(img);
+            }
         </script>
+
+        <img src="../static/images/Chess_qdt45.svg" width="45" height="45" th:src="@{/images/Chess_qdt45.svg}" />
     </body>
 </html>
