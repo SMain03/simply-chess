@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>simply-chess</title>
+        <style>
+            #board {
+                width: 400px;
+                height: 400px;
+            }
+
+            .board-cell {
+                width: 50px;
+                height: 50px;
+                float: left;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="board"></div>
+        <script>
+            let board = document.getElementById('board');
+            for (let i=0; i<8; ++i) {
+                for (let  j=0; j<8; ++j) {
+                    let cell = document.createElement('div');
+                    cell.className = 'board-cell';
+                    if ((i+j) % 2 == 0) {
+                        cell.style.backgroundColor = '#fff';
+                    } else {
+                        cell.style.backgroundColor = '#000';
+                    }
+                    board.appendChild(cell);
+                }
+            }
+        </script>
+    </body>
+</html>
