@@ -51,7 +51,13 @@ for (const cell of chessboard.board.children) {
     });
     cell.addEventListener("drop", (e) => {
         e.preventDefault();
-        e.target.appendChild(dragged);
+        if (e.target.classList.contains("piece-image")) {
+            let parent = e.target.parentNode;
+            parent.removeChild(e.target);
+            parent.appendChild(dragged);
+        } else {
+            e.target.appendChild(dragged);
+        }
     });
 }
 
