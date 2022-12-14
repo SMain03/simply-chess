@@ -1,67 +1,66 @@
 class ChessBoard {
     constructor() {
-        this.board = []
-        this.board.length = 64;
+        this.board = document.getElementById("board");
+        for (let i=0; i<8; ++i) {
+            for (let j=0; j<8; ++j) {
+                let cell = document.createElement("div");
+                if ((i+j) % 2 === 0) {
+                    cell.className = "board-cell-light";
+                } else {
+                    cell.className = "board-cell-dark";
+                }
+                this.board.appendChild(cell);
+            }
+        }
 
-        this.board[0] = "white rook";
-        this.board[1] = "white knight";
-        this.board[2] = "white bishop";
-        this.board[3] = "white queen";
-        this.board[4] = "white king";
-        this.board[5] = "white bishop";
-        this.board[6] = "white knight";
-        this.board[7] = "white rook";
+        let pieces = ["black rook", "black knight", "black bishop", "black queen", "black king", "black bishop", "black knight", "black rook"];
+        for (let i=0; i<8; ++i) {
+            this.board.children.item(i).appendChild(createPieceImage(pieces[i]));
+        }
+
         for (let i=8; i<16; ++i) {
-            this.board[i] = "white pawn";
+            this.board.children.item(i).appendChild(createPieceImage("black pawn"));
         }
 
         for (let i=48; i<56; ++i) {
-            this.board[i] = "black pawn";
+            this.board.children.item(i).appendChild(createPieceImage("white pawn"));
         }
-        this.board[56] = "black rook";
-        this.board[57] = "black knight";
-        this.board[58] = "black bishop";
-        this.board[59] = "black queen";
-        this.board[60] = "black king";
-        this.board[61] = "black bishop";
-        this.board[62] = "black knight";
-        this.board[63] = "black rook";
-    }
-}
 
-function drawChessBoard(board) {
-    let boardDiv = document.getElementById('board');
-    for (let i=0; i<8; ++i) {
-        for (let j=0; j<8; ++j) {
-            let cell = document.createElement('div');
-            cell.className = 'board-cell';
-            if ((i+j) % 2 === 0) {
-                cell.style.backgroundColor = '#D0B6B0';
-            } else {
-                cell.style.backgroundColor = '#9B746B';
-            }
-            boardDiv.appendChild(cell);
-        }
-    }
-
-    for (let i=0; i<8; ++i) {
-        for (let j=0; j<8; ++j) {
-            let index = i*8+j;
-            if (board.board[index] !== undefined) {
-                let displayIndex = 8*(7-i) + j;
-                let cell = boardDiv.children.item(displayIndex);
-                let img = createImage(board.board[index]);
-                cell.appendChild(img);
-            }
+        pieces = ["white rook", "white knight", "white bishop", "white queen", "white king", "white bishop", "white knight", "white rook"];
+        for (let i=56; i<64; ++i) {
+            this.board.children.item(i).appendChild(createPieceImage(pieces[i-56]));
         }
     }
 }
 
-function createImage(piece) {
+const chessboard = new ChessBoard();
+
+const pieces = document.querySelectorAll(".piece-image");
+
+let dragged;
+
+for (const piece of pieces) {
+    piece.addEventListener("dragstart", (e) => {
+        dragged = e.target;
+    });
+}
+
+for (const cell of chessboard.board.children) {
+    cell.addEventListener("dragover", (e) => {
+        e.preventDefault();
+    });
+    cell.addEventListener("drop", (e) => {
+        e.preventDefault();
+        e.target.appendChild(dragged);
+    });
+}
+
+function createPieceImage(piece) {
     let img = document.createElement('img');
-    img.className = "pieceImage";
+    img.className = "piece-image";
     img.width = 45;
     img.height = 45;
+    img.draggable = true;
     switch (piece) {
         case "white king":
             img.src = '/images/Chess_klt45.svg';
