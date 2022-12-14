@@ -48,7 +48,8 @@ function drawChessBoard(board) {
         for (let j=0; j<8; ++j) {
             let index = i*8+j;
             if (board.board[index] !== undefined) {
-                let cell = boardDiv.children.item(index);
+                let displayIndex = 8*(7-i) + j;
+                let cell = boardDiv.children.item(displayIndex);
                 let img = createImage(board.board[index]);
                 cell.appendChild(img);
             }
