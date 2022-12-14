@@ -59,6 +59,7 @@ function drawChessBoard(board) {
 
 function createImage(piece) {
     let img = document.createElement('img');
+    img.className = "pieceImage";
     img.width = 45;
     img.height = 45;
     switch (piece) {
